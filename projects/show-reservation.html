@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Show Reservation Platform — Kyllian Siewe Tiague</title>
+    <meta name="description"
+        content="A Symfony ticketing application with authentication, reservations and role-based administration.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects/show-reservation.html">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="../index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="../index.html">Home</a></li>
+                <li><a class="site-nav__link" href="../about.html">About</a></li>
+                <li><a class="site-nav__link" href="../skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <article class="project">
+
+            <header class="project__header">
+                <h1 class="project__title">Show Reservation Platform</h1>
+                <p class="project__tagline">A ticketing application for live shows, built with Symfony</p>
+                <ul class="project__meta">
+                    <li>Backend and frontend contributor</li>
+                    <li>Team of four, ESILV, 2025 to 2026</li>
+                    <li>Web</li>
+                </ul>
+            </header>
+
+            <img class="project__cover" src="../assets/images/projects/vkh-show-home.jpg"
+                alt="Home page of the VKH Show reservation platform">
+
+            <section aria-labelledby="show-context">
+                <h2 id="show-context">Context</h2>
+                <p>
+                    A team assignment: build a web platform where visitors can browse
+                    live shows, create an account, book a seat and review their past
+                    reservations, with an administration interface behind it.
+                </p>
+            </section>
+
+            <section aria-labelledby="show-problem">
+                <h2 id="show-problem">The problem</h2>
+                <p>
+                    Anything involving accounts raises the same question immediately:
+                    who is allowed to see what. A visitor browses. A logged-in user
+                    books and sees their own history. An administrator manages
+                    everything. Getting that wrong is not a display bug, it is a
+                    security hole.
+                </p>
+            </section>
+
+            <section aria-labelledby="show-architecture">
+                <h2 id="show-architecture">Architecture</h2>
+                <p>
+                    A Symfony MVC application: a MySQL database accessed through
+                    Doctrine ORM, Twig templates for the views, and controllers
+                    handling routes and requests. Administration routes are protected
+                    by role-based access control, so an authenticated user without
+                    the administrator role cannot reach them even by typing the URL.
+                </p>
+                <ol class="step-list">
+                    <li>Create an account</li>
+                    <li>Log in</li>
+                    <li>Browse the available shows</li>
+                    <li>Book a seat</li>
+                    <li>Confirm the reservation</li>
+                    <li>Simulated payment step</li>
+                    <li>Review past reservations</li>
+                </ol>
+            </section>
+
+            <section aria-labelledby="show-role">
+                <h2 id="show-role">My role</h2>
+                <p>
+                    I worked across both sides of the application, contributing to
+                    the backend, including entity and database work and the
+                    controllers behind the reservation flow, and to the frontend
+                    templates that render it. Working on both ends made the
+                    connection between them concrete: a route resolves to a
+                    controller, which queries entities through Doctrine, and hands
+                    data to a Twig template that becomes the HTML the browser
+                    receives.
+                </p>
+            </section>
+
+            <section aria-labelledby="show-team">
+                <h2 id="show-team">Working as a team</h2>
+                <p>
+                    Four people on one codebase, splitting authentication, the home
+                    page, the reservation flow, database management and the
+                    administration features. This is where Git stopped being a
+                    command I ran and became something I actually needed: branches,
+                    merges, and the discipline of not breaking someone else's work.
+                </p>
+            </section>
+
+            <section aria-labelledby="show-limits">
+                <h2 id="show-limits">Honest limitations</h2>
+                <p>
+                    This is an academic beta. Payment is simulated, the application
+                    runs locally, and the data is for testing. Before anything like
+                    this could go live it would need automated tests, real payment
+                    integration, and a serious pass over access control and input
+                    validation.
+                </p>
+            </section>
+
+            <section aria-labelledby="show-learned">
+                <h2 id="show-learned">What I took from it</h2>
+                <ul>
+                    <li>
+                        Authorisation belongs on the server. Hiding a link in the
+                        interface hides nothing from someone typing the URL.
+                    </li>
+                    <li>
+                        A shared codebase changes how you write. Code that only you
+                        can read is a problem, not a style.
+                    </li>
+                    <li>
+                        Working across the full request cycle taught me more than
+                        either half would have alone.
+                    </li>
+                </ul>
+            </section>
+
+            <footer class="project__footer">
+                <h2>Links</h2>
+                <ul class="project__links">
+                    <li><a href="https://github.com/mIsHkA-exe" rel="noopener">Repository on GitHub</a></li>
+                    <li><a href="../projects.html">Back to all projects</a></li>
+                </ul>
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../skills.html">Skills</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+</body>
+
+</html>

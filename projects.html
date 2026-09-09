@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Projects — Kyllian Siewe Tiague</title>
+    <meta name="description" content="Web applications, embedded systems and low-level programming projects.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects.html">
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="index.html">Home</a></li>
+                <li><a class="site-nav__link" href="about.html">About</a></li>
+                <li><a class="site-nav__link" href="skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="projects.html" aria-current="page">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <section class="page-intro" aria-labelledby="projects-title">
+            <h1 id="projects-title">Projects</h1>
+
+            <p>
+                Five projects, from a static page written in my first weeks to a
+                connected system running across a web platform and physical
+                hardware. Each page describes what the project had to solve, what I
+                did, and what went wrong along the way.
+            </p>
+        </section>
+
+        <section class="filter-bar" aria-labelledby="filters-title">
+            <h2 class="visually-hidden" id="filters-title">Filter by type</h2>
+
+            <ul class="filter-bar__list">
+                <li><button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button></li>
+                <li><button class="filter-btn" type="button" data-filter="web" aria-pressed="false">Web</button></li>
+                <li><button class="filter-btn" type="button" data-filter="hardware" aria-pressed="false">Systems and
+                        hardware</button></li>
+            </ul>
+        </section>
+
+        <section class="card-grid" aria-labelledby="project-list-title">
+            <h2 class="visually-hidden" id="project-list-title">All projects</h2>
+
+            <article class="card" data-category="web hardware">
+                <img class="card__media" src="assets/images/projects/davinci-prototype.jpg"
+                    alt="Physical scale model of the smart parking prototype, built in laser-cut wood">
+                <h3 class="card__title"><a href="projects/davinci-custom-garage.html">DAVINCI Custom Garage</a></h3>
+                <p class="card__role">Technical lead</p>
+                <p>
+                    A connected smart parking system: online reservation, QR-code
+                    access control, automated barrier and live occupancy detection,
+                    built as a working physical prototype.
+                </p>
+                <ul class="tag-list">
+                    <li>Symfony</li>
+                    <li>REST API</li>
+                    <li>MySQL</li>
+                    <li>Arduino</li>
+                    <li>ESP32</li>
+                    <li>C++</li>
+                </ul>
+            </article>
+
+            <article class="card" data-category="web">
+                <img class="card__media" src="assets/images/projects/meno-clean-home.jpg"
+                    alt="Home page of the MENO CLEAN SERVICES website">
+                <h3 class="card__title"><a href="projects/meno-clean-services.html">MENO CLEAN Services</a></h3>
+                <p class="card__role">Sole developer</p>
+                <p>
+                    A commercial website for a cleaning company, rewritten from
+                    static HTML into a Symfony application with a database-driven
+                    service catalog and two server-validated forms.
+                </p>
+                <ul class="tag-list">
+                    <li>Symfony 8.1</li>
+                    <li>Twig</li>
+                    <li>Stimulus</li>
+                    <li>Turbo</li>
+                    <li>MySQL</li>
+                </ul>
+            </article>
+
+            <article class="card" data-category="hardware">
+                <img class="card__media" src="assets/images/projects/cpu-architecture-sketch.jpg"
+                    alt="Hand-drawn architecture diagram of the simulated processor">
+                <h3 class="card__title"><a href="projects/cpu-simulator.html">16-bit CPU Simulator</a></h3>
+                <p class="card__role">Pipeline implementation</p>
+                <p>
+                    A processor simulator in C running a 4-stage pipeline cycle by
+                    cycle, with hazard detection and forwarding.
+                </p>
+                <ul class="tag-list">
+                    <li>C</li>
+                    <li>Computer architecture</li>
+                    <li>Pipelining</li>
+                </ul>
+            </article>
+
+            <article class="card" data-category="web">
+                <img class="card__media" src="assets/images/projects/vkh-show-home.jpg"
+                    alt="Home page of the VKH Show reservation platform">
+                <h3 class="card__title"><a href="projects/show-reservation.html">Show Reservation Platform</a></h3>
+                <p class="card__role">Backend and frontend contributor</p>
+                <p>
+                    A ticketing platform for live shows: account creation,
+                    authentication, browsing, reservation and a role-protected
+                    administration interface.
+                </p>
+                <ul class="tag-list">
+                    <li>Symfony</li>
+                    <li>Doctrine</li>
+                    <li>MySQL</li>
+                    <li>Twig</li>
+                </ul>
+            </article>
+
+            <article class="card" data-category="web">
+                <img class="card__media" src="assets/images/projects/das-auto-hero.jpg"
+                    alt="Hero section of the DAS AUTO static website">
+                <h3 class="card__title"><a href="projects/das-auto.html">DAS AUTO</a></h3>
+                <p class="card__role">Solo project</p>
+                <p>
+                    A static showcase site built with HTML and CSS only. My first
+                    front-end project, and where I learned how a browser actually
+                    resolves a path.
+                </p>
+                <ul class="tag-list">
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                </ul>
+            </article>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+    <script src="assets/js/filters.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
+</body>
+
+</html>

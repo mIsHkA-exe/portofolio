@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>16-bit CPU Simulator — Kyllian Siewe Tiague</title>
+    <meta name="description"
+        content="A pipelined 16-bit processor simulator written in C, with hazard detection and forwarding.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects/cpu-simulator.html">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="../index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="../index.html">Home</a></li>
+                <li><a class="site-nav__link" href="../about.html">About</a></li>
+                <li><a class="site-nav__link" href="../skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <article class="project">
+
+            <header class="project__header">
+                <h1 class="project__title">16-bit CPU Simulator</h1>
+                <p class="project__tagline">Simulating a pipelined processor, cycle by cycle, in C</p>
+                <ul class="project__meta">
+                    <li>Pipeline implementation</li>
+                    <li>Team of three, ESILV, completed May 2026</li>
+                    <li>Systems and hardware</li>
+                </ul>
+            </header>
+
+            <img class="project__cover" src="../assets/images/projects/cpu-architecture-sketch.jpg"
+                alt="Hand-drawn architecture diagram showing memory, control unit, processing unit, data bus and address bus">
+
+            <section aria-labelledby="cpu-context">
+                <h2 id="cpu-context">Context</h2>
+                <p>
+                    A computer architecture assignment: build a working simulator of
+                    a 16-bit processor in C, able to execute a small instruction set
+                    and show what happens inside the chip at every clock cycle.
+                </p>
+                <p>
+                    The diagram above is the one we drew before writing any code.
+                    Memory, control unit, processing unit, the register bank, the
+                    ALU, and the two buses connecting them.
+                </p>
+            </section>
+
+            <section aria-labelledby="cpu-problem">
+                <h2 id="cpu-problem">The problem</h2>
+                <p>
+                    A processor that executes one instruction at a time is
+                    straightforward. A pipelined processor executes four at once, at
+                    different stages, and that is where it stops being simple: the
+                    instructions start interfering with each other.
+                </p>
+            </section>
+
+            <section aria-labelledby="cpu-architecture">
+                <h2 id="cpu-architecture">Architecture</h2>
+                <p>
+                    A Von Neumann design with a shared memory of 32 cells, four
+                    16-bit working registers, an arithmetic logic unit, a program
+                    counter, and inter-stage registers carrying data between pipeline
+                    stages.
+                </p>
+                <ol class="step-list">
+                    <li>Fetch: read the instruction at the program counter</li>
+                    <li>Decode: extract the opcode, source and destination registers</li>
+                    <li>Execute: run the operation through the ALU</li>
+                    <li>Memory and write-back: access memory, write results</li>
+                </ol>
+                <p>
+                    The main loop calls the stages in reverse order, so that each one
+                    reads the state its predecessor left at the end of the previous
+                    cycle rather than the one being written right now.
+                </p>
+            </section>
+
+            <section aria-labelledby="cpu-role">
+                <h2 id="cpu-role">My role</h2>
+                <p>
+                    I implemented the pipeline layer: the inter-stage registers,
+                    detection of structural and data hazards, and the forwarding
+                    mechanism used to resolve dependencies between consecutive
+                    instructions.
+                </p>
+            </section>
+
+            <section aria-labelledby="cpu-hazards">
+                <h2 id="cpu-hazards">The interesting part: hazards</h2>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Structural hazards</h3>
+                    <p>
+                        Fetch and the memory stage can both need the RAM in the same
+                        cycle, and there is only one memory. The fix is to stall
+                        fetch for a cycle and insert a bubble, letting the memory
+                        stage win. It costs a cycle, but it cannot be avoided in a
+                        Von Neumann design with a single shared memory.
+                    </p>
+                </article>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Data hazards and forwarding</h3>
+                    <p>
+                        When one instruction adds two registers that the previous
+                        instruction has not finished writing yet, reading the
+                        register bank returns a stale value. Forwarding solves this by
+                        routing the result directly from the execute stage back to the
+                        instruction that needs it, before it has been written
+                        anywhere.
+                    </p>
+                    <p>
+                        This is the part I found genuinely instructive. The processor
+                        is not just executing instructions; it is constantly checking
+                        whether the value it is about to read is still true.
+                    </p>
+                </article>
+            </section>
+
+            <section aria-labelledby="cpu-result">
+                <h2 id="cpu-result">Result</h2>
+                <p>
+                    The simulator prints the full processor state at each cycle:
+                    registers, program counter, current instruction and the entire
+                    memory. Running the test program loads 5 and 3 into two
+                    registers, adds them, and stores the result at address 10.
+                </p>
+                <img class="project__figure" src="../assets/images/projects/cpu-output-final.jpg"
+                    alt="Terminal output showing the final processor state with registers and memory contents">
+                <p>
+                    Final state: R1 holds 5, R2 holds 3, R3 holds 8, and memory
+                    address 10 contains 8. Which is exactly what it should be.
+                </p>
+            </section>
+
+            <section aria-labelledby="cpu-learned">
+                <h2 id="cpu-learned">What I took from it</h2>
+                <ul>
+                    <li>
+                        Parallelism is not free. Every stage you add creates a new
+                        way for instructions to interfere.
+                    </li>
+                    <li>
+                        Printing state at every cycle is the only realistic way to
+                        debug something with four things happening at once.
+                    </li>
+                    <li>
+                        This is the layer everything else sits on. Understanding it
+                        changes how you read higher-level code.
+                    </li>
+                </ul>
+            </section>
+
+            <footer class="project__footer">
+                <h2>Links</h2>
+                <ul class="project__links">
+                    <li><a href="https://github.com/mIsHkA-exe" rel="noopener">Repository on GitHub</a></li>
+                    <li><a href="../projects.html">Back to all projects</a></li>
+                </ul>
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../skills.html">Skills</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+</body>
+
+</html>

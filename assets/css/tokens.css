@@ -1,0 +1,109 @@
+/* ==========================================================================
+   TOKENS
+   Le vocabulaire du site. Aucune règle de mise en forme ici, uniquement
+   des valeurs nommées. Tout le reste du CSS y fait référence.
+   ========================================================================== */
+
+:root {
+
+    /* ----------------------------------------------------------------------
+       COULEURS
+       Contrastes vérifiés : tous les couples texte / fond dépassent 7:1.
+       ---------------------------------------------------------------------- */
+
+    --color-bg:             #0B0B12;
+    --color-surface:        #14141F;
+    --color-surface-raised: #1D1D2B;
+    --color-border:         #2E2E42;
+    --color-border-strong:  #45455E;
+
+    --color-text:           #EDEDF5;
+    --color-text-muted:     #A3A3BA;
+
+    --color-accent:         #B49CFF;
+    --color-accent-dim:     #8B72E8;
+    --color-highlight:      #F0B274;
+
+    /* Halo du hero : violet très dilué, invisible en aplat, perceptible en dégradé */
+    --color-glow:           rgba(139, 114, 232, 0.18);
+
+
+    /* ----------------------------------------------------------------------
+       TYPOGRAPHIE
+       ---------------------------------------------------------------------- */
+
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+    /* Échelle fluide. Chaque taille s'adapte entre un plancher et un plafond. */
+    --text-xs:   0.75rem;
+    --text-sm:   0.875rem;
+    --text-base: 1rem;
+    --text-lg:   clamp(1.0625rem, 1rem + 0.3vw,  1.1875rem);
+    --text-xl:   clamp(1.25rem,   1.15rem + 0.5vw, 1.5rem);
+    --text-2xl:  clamp(1.5rem,    1.3rem + 1vw,    2rem);
+    --text-3xl:  clamp(1.875rem,  1.5rem + 1.8vw,  2.75rem);
+    --text-4xl:  clamp(2.5rem,    1.8rem + 3.5vw,  4.5rem);
+
+    --leading-tight:   1.15;
+    --leading-snug:    1.35;
+    --leading-normal:  1.7;
+
+    --tracking-tight:  -0.02em;
+    --tracking-wide:    0.08em;
+
+    --weight-normal:   400;
+    --weight-medium:   500;
+    --weight-bold:     700;
+
+
+    /* ----------------------------------------------------------------------
+       ESPACEMENTS
+       Échelle non linéaire : les petits écarts se distinguent mieux que
+       les grands, donc les incréments s'élargissent en montant.
+       ---------------------------------------------------------------------- */
+
+    --space-3xs: 0.25rem;
+    --space-2xs: 0.5rem;
+    --space-xs:  0.75rem;
+    --space-sm:  1rem;
+    --space-md:  1.5rem;
+    --space-lg:  2.5rem;
+    --space-xl:  4rem;
+    --space-2xl: 6rem;
+    --space-3xl: 9rem;
+
+    /* Rythme vertical entre deux sections, adapté à la largeur d'écran */
+    --section-gap: clamp(4rem, 3rem + 5vw, 8rem);
+
+
+    /* ----------------------------------------------------------------------
+       MISE EN PAGE
+       ---------------------------------------------------------------------- */
+
+    --width-content: 68rem;  /* largeur maximale des sections */
+    --width-prose:   40rem;  /* largeur de lecture confortable, ~75 caractères */
+    --gutter:        clamp(1.25rem, 4vw, 3rem);
+
+
+    /* ----------------------------------------------------------------------
+       BORDURES ET RAYONS
+       ---------------------------------------------------------------------- */
+
+    --radius-sm:   4px;
+    --radius-md:   10px;
+    --radius-lg:   18px;
+    --radius-full: 999px;
+
+    --border-thin: 1px solid var(--color-border);
+
+
+    /* ----------------------------------------------------------------------
+       TRANSITIONS
+       ---------------------------------------------------------------------- */
+
+    --ease:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --duration:    220ms;
+    --transition:  var(--duration) var(--ease);
+}

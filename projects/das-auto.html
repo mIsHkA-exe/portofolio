@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>DAS AUTO — Kyllian Siewe Tiague</title>
+    <meta name="description"
+        content="A static showcase site built with HTML and CSS only, and the path bug it taught me to diagnose.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects/das-auto.html">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="../index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="../index.html">Home</a></li>
+                <li><a class="site-nav__link" href="../about.html">About</a></li>
+                <li><a class="site-nav__link" href="../skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <article class="project">
+
+            <header class="project__header">
+                <h1 class="project__title">DAS AUTO</h1>
+                <p class="project__tagline">My first front-end project, in plain HTML and CSS</p>
+                <ul class="project__meta">
+                    <li>Team of two</li>
+                    <li>ESILV coursework project</li>
+                    <li>Web</li>
+                </ul>
+            </header>
+
+            <img class="project__cover" src="../assets/images/projects/das-auto-hero.jpg"
+                alt="Hero section of the DAS AUTO site, with a full-width background video and centred heading">
+
+            <section aria-labelledby="das-context">
+                <h2 id="das-context">Context</h2>
+                <p>
+                    A coursework assignment: build a static showcase site for a
+                    company of my choice, using nothing but HTML and CSS. No
+                    framework, no JavaScript, no shortcuts.
+                </p>
+                <p>
+                    I include it deliberately. It is the earliest thing here, and it
+                    marks where I started.
+                </p>
+            </section>
+
+            <section aria-labelledby="das-built">
+                <h2 id="das-built">What I built</h2>
+                <p>
+                    Three pages sharing a fixed navigation bar, a hero section with a
+                    full-width background video, a presentation section, a
+                    four-column advantages grid and a product grid linking to detail
+                    anchors, plus a footer with a newsletter form and social links.
+                </p>
+                <img class="project__figure" src="../assets/images/projects/das-auto-store.jpg"
+                    alt="The products page of the DAS AUTO site">
+            </section>
+
+            <section aria-labelledby="das-challenge">
+                <h2 id="das-challenge">The bug that taught me the most</h2>
+                <p>
+                    At one point the page rendered with no styling at all. No error
+                    message, no console warning, just raw HTML. I had moved the pages
+                    into a subfolder, and every relative path in the document broke at
+                    once: the stylesheet, the images, the video.
+                </p>
+                <p>
+                    A relative path starts from the folder containing the current
+                    document, not from the root of the server. Moving a file
+                    therefore invalidates every path inside it. And a missing
+                    stylesheet fails silently, which is what made it confusing.
+                </p>
+                <p>
+                    What I actually learned was the method: open the network tab,
+                    look at what the browser requested and what it got back, and
+                    compare that URL to where the file really is. The gap between
+                    them is the bug. I have used that approach on every project
+                    since.
+                </p>
+            </section>
+
+            <section aria-labelledby="das-review">
+                <h2 id="das-review">Looking back at it</h2>
+                <p>
+                    Things I would do differently now: use semantic sections instead
+                    of nested containers, avoid spaces in filenames, keep the CSS
+                    split by responsibility rather than in one long file, and write
+                    the layout mobile-first rather than adding breakpoints
+                    afterwards.
+                </p>
+                <p>
+                    Being able to list those is the point of keeping this project on
+                    the site.
+                </p>
+            </section>
+
+            <footer class="project__footer">
+                <h2>Links</h2>
+                <ul class="project__links">
+                    <li><a href="https://github.com/mIsHkA-exe" rel="noopener">Repository on GitHub</a></li>
+                    <li><a href="../projects.html">Back to all projects</a></li>
+                </ul>
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../skills.html">Skills</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+</body>
+
+</html>

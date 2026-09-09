@@ -1,0 +1,245 @@
+/* ==========================================================================
+   BASE
+   Reset et styles par défaut des éléments natifs.
+   Aucune classe ici : uniquement des sélecteurs de type.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RESET
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Les navigateurs appliquent des marges par défaut incohérentes entre eux.
+   On repart de zéro et on décide nous-mêmes du rythme vertical. */
+body,
+h1, h2, h3, h4,
+p,
+figure,
+blockquote,
+ul, ol,
+dl, dd {
+    margin: 0;
+}
+
+ul[class],
+ol[class] {
+    padding: 0;
+    list-style: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. DOCUMENT
+   -------------------------------------------------------------------------- */
+
+html {
+    /* Décale l'ancre sous le header fixe au lieu de la coller au bord */
+    scroll-padding-top: var(--space-2xl);
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Le défilement doux est une préférence, pas une obligation : on ne
+   l'applique qu'aux personnes qui ne demandent pas de mouvement réduit. */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    font-weight: var(--weight-normal);
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. ÉLÉMENTS MASQUÉS
+   Le style navigateur par défaut est [hidden] { display: none }, mais sa
+   spécificité est plus faible que celle d'une classe. Une carte en
+   display: flex resterait donc visible malgré son attribut hidden.
+   -------------------------------------------------------------------------- */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. TITRES
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+
+    /* Empêche un mot isolé de tomber seul sur la dernière ligne */
+    text-wrap: balance;
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-xl);  }
+h4 { font-size: var(--text-lg);  }
+
+
+/* --------------------------------------------------------------------------
+   4. TEXTE
+   -------------------------------------------------------------------------- */
+
+p {
+    /* Évite les lignes orphelines en fin de paragraphe */
+    text-wrap: pretty;
+}
+
+/* Limite la largeur de lecture uniquement pour les paragraphes directement
+   dans une section : au-delà de ~75 caractères, l'œil perd sa ligne. */
+main section > p {
+    max-width: var(--width-prose);
+}
+
+strong {
+    font-weight: var(--weight-medium);
+    color: var(--color-text);
+}
+
+small {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+code,
+kbd,
+samp,
+pre {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. LIENS
+   -------------------------------------------------------------------------- */
+
+a {
+    color: var(--color-accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--color-highlight);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. FOCUS
+   Jamais supprimé. C'est le seul repère d'un utilisateur au clavier.
+   :focus-visible ne l'affiche qu'au clavier, pas au clic souris.
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+    outline: 2px solid var(--color-highlight);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. MÉDIAS
+   -------------------------------------------------------------------------- */
+
+img,
+picture,
+video,
+svg {
+    display: block;      /* supprime l'espace fantôme sous les images inline */
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. LISTES SANS CLASSE
+   -------------------------------------------------------------------------- */
+
+main ul:not([class]),
+main ol:not([class]) {
+    max-width: var(--width-prose);
+    padding-left: var(--space-md);
+}
+
+main li + li {
+    margin-top: var(--space-2xs);
+}
+
+main li::marker {
+    color: var(--color-accent-dim);
+}
+
+
+/* --------------------------------------------------------------------------
+   10. FORMULAIRES
+   Les champs n'héritent pas de la police du document par défaut.
+   -------------------------------------------------------------------------- */
+
+input,
+textarea,
+select,
+button {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. SÉLECTION
+   -------------------------------------------------------------------------- */
+
+::selection {
+    background-color: var(--color-accent-dim);
+    color: var(--color-text);
+}
+
+
+/* --------------------------------------------------------------------------
+   12. MOUVEMENT RÉDUIT
+   Respecte le réglage système. Les animations ne sont pas supprimées mais
+   ramenées à une durée imperceptible, ce qui évite de casser les scripts
+   qui attendent la fin d'une transition.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

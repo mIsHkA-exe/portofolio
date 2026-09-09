@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>DAVINCI Custom Garage — Kyllian Siewe Tiague</title>
+    <meta name="description"
+        content="A connected smart parking system combining Symfony, a REST API, Arduino and ESP32.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects/davinci-custom-garage.html">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="../index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="../index.html">Home</a></li>
+                <li><a class="site-nav__link" href="../about.html">About</a></li>
+                <li><a class="site-nav__link" href="../skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <article class="project">
+
+            <header class="project__header">
+                <h1 class="project__title">DAVINCI Custom Garage</h1>
+                <p class="project__tagline">A connected smart parking system, from the browser to the sensor</p>
+                <ul class="project__meta">
+                    <li>Technical lead</li>
+                    <li>Team of four, ESILV, 2025 to 2026</li>
+                    <li>Web and hardware</li>
+                </ul>
+            </header>
+
+            <img class="project__cover" src="../assets/images/projects/davinci-prototype.jpg"
+                alt="Physical scale model of the smart parking prototype, built in laser-cut wood">
+
+            <section aria-labelledby="dav-context">
+                <h2 id="dav-context">Context</h2>
+                <p>
+                    Finding a free space in an urban car park wastes time and fuel,
+                    and most barriers still rely on tickets that can be lost or
+                    copied. The brief was to build a system that knows which spaces
+                    are free and lets an authorised driver in without a ticket, as a
+                    working physical prototype under a 150 euro hardware budget.
+                </p>
+            </section>
+
+            <section aria-labelledby="dav-problem">
+                <h2 id="dav-problem">The problem</h2>
+                <p>
+                    The difficulty is not building a website, and it is not wiring a
+                    sensor. It is keeping two very different worlds telling the same
+                    story: a database that believes space three is occupied, and a
+                    physical space that actually is. Any drift between them makes the
+                    whole system useless.
+                </p>
+            </section>
+
+            <section aria-labelledby="dav-architecture">
+                <h2 id="dav-architecture">Architecture</h2>
+                <p>The system runs across three layers.</p>
+                <ol class="step-list">
+                    <li>
+                        User layer: the web interface where a driver checks
+                        availability and books a space.
+                    </li>
+                    <li>
+                        Application layer: a Symfony application with Doctrine and
+                        MySQL, handling users, reservations, QR codes, parking spaces
+                        and access history, and exposing a REST API.
+                    </li>
+                    <li>
+                        Embedded layer: an Arduino UNO R4 WiFi and an ESP32-CAM
+                        driving ultrasonic and infrared sensors, servo motors, status
+                        LEDs and an LCD display.
+                    </li>
+                </ol>
+                <p>
+                    The two ends never talk directly. Everything passes through the
+                    REST API over HTTP with JSON payloads, which means either side
+                    can be tested on its own.
+                </p>
+                <img class="project__figure" src="../assets/images/projects/davinci-login-page.jpg"
+                    alt="The prototype wiring: ultrasonic sensors, jumper wires and the Arduino board on a cardboard base">
+            </section>
+
+            <section aria-labelledby="dav-flow">
+                <h2 id="dav-flow">How a reservation works</h2>
+                <ol class="step-list">
+                    <li>The driver books a space on the web application.</li>
+                    <li>Symfony generates a unique QR code for that reservation.</li>
+                    <li>At the entrance, the ESP32-CAM reads the code.</li>
+                    <li>The API validates it server-side against the reservation.</li>
+                    <li>If valid, the barrier opens and the access is recorded.</li>
+                    <li>A sensor detects the vehicle and updates the space status.</li>
+                    <li>The change propagates back to the database and the interface.</li>
+                </ol>
+            </section>
+
+            <section aria-labelledby="dav-role">
+                <h2 id="dav-role">My role</h2>
+                <p>
+                    I designed the three-layer architecture and built the software
+                    side of it: the Symfony web application, the REST API connecting
+                    it to the hardware, the QR-code access control, and the
+                    synchronisation between sensor state and database. I also handled
+                    the integration between the web platform and the Arduino and
+                    ESP32 boards, which is where most of the difficulty turned out to
+                    be.
+                </p>
+            </section>
+
+            <section aria-labelledby="dav-challenge">
+                <h2 id="dav-challenge">What went wrong</h2>
+                <p>
+                    Real-time synchronisation was, and still is, the hardest part of
+                    this project. Each link in the chain works: the sensor fires, the
+                    board sends, the API receives, the database writes, the page
+                    displays. Chained together, they drift.
+                </p>
+                <p>
+                    The reason is that nothing in the chain shares a clock. A sensor
+                    reports a state change the moment it happens; an HTTP request
+                    takes as long as the network decides; a web page only knows what
+                    was true when it was loaded. Between those three timescales,
+                    there is always a window in which the display and reality
+                    disagree.
+                </p>
+                <p>
+                    What I would do differently: stop treating the web page as
+                    something that reads a value, and make the server push changes to
+                    it instead, with the embedded layer sending a state rather than
+                    an event, so that a lost message cannot leave the system stuck in
+                    the wrong state. That is the direction I want to take the next
+                    version.
+                </p>
+            </section>
+
+            <section aria-labelledby="dav-result">
+                <h2 id="dav-result">Result</h2>
+                <p>
+                    A functional prototype: vehicle detection, space status updates,
+                    valid and invalid QR-code handling, automatic barrier opening and
+                    closing, and database synchronisation all tested successfully.
+                    The parking structure was modelled in SolidWorks before assembly,
+                    and the circuits were validated in Wokwi and Tinkercad before any
+                    component was bought.
+                </p>
+                <p>Final hardware cost: 142.74 euros, against a 150 euro limit.</p>
+            </section>
+
+            <section aria-labelledby="dav-learned">
+                <h2 id="dav-learned">What I took from it</h2>
+                <ul>
+                    <li>
+                        Distributed state is a design problem, not a coding problem.
+                        No amount of careful implementation fixes an architecture
+                        that assumes instant agreement between two systems.
+                    </li>
+                    <li>
+                        Simulating a circuit before buying it is not extra work. It
+                        is the cheapest debugging you will ever do.
+                    </li>
+                    <li>
+                        An API is a contract. Once the two teams agreed on the JSON,
+                        the web and embedded sides could progress independently.
+                    </li>
+                </ul>
+            </section>
+
+            <footer class="project__footer">
+                <h2>Links</h2>
+                <ul class="project__links">
+                    <li><a href="https://github.com/mIsHkA-exe" rel="noopener">Repository on GitHub</a></li>
+                    <li><a href="../projects.html">Back to all projects</a></li>
+                </ul>
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../skills.html">Skills</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+</body>
+
+</html>

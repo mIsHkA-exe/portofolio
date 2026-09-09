@@ -1,0 +1,321 @@
+/* ==========================================================================
+   LAYOUT
+   Où les blocs se placent : position, dimensions, flux.
+   Aucune couleur, aucune bordure décorative.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. HEADER
+
+   Le padding calculé remplace un conteneur intermédiaire :
+   max(gouttière, moitié de l'espace restant) donne la gouttière minimale
+   sur petit écran, et centre le contenu au-delà de la largeur maximale.
+   -------------------------------------------------------------------------- */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-lg);
+
+    padding-block: var(--space-sm);
+    padding-inline: max(
+        var(--gutter),
+        (100% - var(--width-content)) / 2
+    );
+}
+
+.site-nav__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs) var(--space-md);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. CONTENEUR PRINCIPAL
+   -------------------------------------------------------------------------- */
+
+main {
+    max-width: var(--width-content);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-block: var(--space-xl) var(--space-3xl);
+}
+
+/* Rythme vertical entre les blocs de premier niveau */
+main > section + section,
+.project > section {
+    margin-top: var(--section-gap);
+}
+
+main > section > h1,
+main > section > h2,
+.project > section > h2 {
+    margin-bottom: var(--space-md);
+}
+
+main p + p {
+    margin-top: var(--space-sm);
+}
+
+
+/* --------------------------------------------------------------------------
+   3. HERO
+   -------------------------------------------------------------------------- */
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 62vh;
+    padding-block: var(--space-lg);
+}
+
+.hero__title {
+    margin-bottom: var(--space-2xs);
+}
+
+.hero__lead {
+    max-width: var(--width-prose);
+    margin-top: var(--space-md);
+}
+
+.hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. GRILLES
+
+   repeat(auto-fit, minmax(N, 1fr)) : le navigateur place autant de colonnes
+   que la largeur le permet, sans media query. Le titre traverse la grille.
+   -------------------------------------------------------------------------- */
+
+.feature-grid,
+.card-grid {
+    display: grid;
+    gap: var(--space-md);
+    align-items: start;
+}
+
+.feature-grid {
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.feature-grid > h2,
+.card-grid > h2,
+.feature-grid > .section-more,
+.card-grid > .section-more {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.feature-grid > .section-more,
+.card-grid > .section-more {
+    margin-top: var(--space-2xs);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. CARTES
+   Hauteur pleine dans la cellule, badges poussés en bas par margin-top: auto.
+   -------------------------------------------------------------------------- */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card__title {
+    margin-top: var(--space-sm);
+}
+
+.card__role {
+    margin-top: var(--space-3xs);
+}
+
+.card > p:not(.card__role) {
+    margin-top: var(--space-2xs);
+}
+
+.card .tag-list {
+    margin-top: auto;
+    padding-top: var(--space-md);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. LISTES DE BADGES
+   -------------------------------------------------------------------------- */
+
+.tag-list,
+.project__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs) var(--space-2xs);
+}
+
+.tag-list li,
+.project__meta li {
+    margin: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   7. BLOCS DE CONTENU
+   -------------------------------------------------------------------------- */
+
+.feature__title,
+.entry__title,
+.skill-group__title,
+.subsection__title {
+    margin-bottom: var(--space-2xs);
+}
+
+.entry + .entry,
+.skill-group + .skill-group,
+.subsection + .subsection {
+    margin-top: var(--space-md);
+}
+
+.step-list {
+    max-width: var(--width-prose);
+    margin-top: var(--space-md);
+    padding-left: var(--space-md);
+}
+
+.step-list li + li {
+    margin-top: var(--space-2xs);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. FILTRES
+   -------------------------------------------------------------------------- */
+
+.filter-bar__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+}
+
+.filter-bar__list li {
+    margin: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. PAGES PROJET
+   -------------------------------------------------------------------------- */
+
+.project__header {
+    margin-bottom: var(--space-lg);
+}
+
+.project__tagline {
+    max-width: var(--width-prose);
+    margin-top: var(--space-2xs);
+}
+
+.project__meta {
+    margin-top: var(--space-md);
+}
+
+.project__cover,
+.project__figure {
+    width: 100%;
+    margin-block: var(--space-md);
+}
+
+.project__footer {
+    margin-top: var(--section-gap);
+    padding-top: var(--space-md);
+}
+
+.project__footer h2 {
+    margin-bottom: var(--space-sm);
+}
+
+.project__links li + li {
+    margin-top: var(--space-2xs);
+}
+
+
+/* --------------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+
+    padding-block: var(--space-lg);
+    padding-inline: max(
+        var(--gutter),
+        (100% - var(--width-content)) / 2
+    );
+}
+
+.site-footer__links,
+.site-footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-md);
+}
+
+.site-footer__links li,
+.site-footer__social li {
+    margin: 0;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   11. ADAPTATIONS PAR LARGEUR
+   Mobile-first : ces règles ajoutent, elles n'annulent rien.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 48rem) {
+
+    .hero {
+        min-height: 72vh;
+    }
+
+    .site-footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 26rem) {
+
+    .site-header {
+        justify-content: flex-start;
+    }
+
+    .site-nav__list {
+        gap: var(--space-2xs) var(--space-sm);
+    }
+}

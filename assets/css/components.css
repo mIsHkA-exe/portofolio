@@ -1,0 +1,544 @@
+/* ==========================================================================
+   COMPONENTS
+   L'apparence des éléments réutilisables : couleurs, bordures, états.
+   Le placement est déjà traité dans layout.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. UTILITAIRES
+   -------------------------------------------------------------------------- */
+
+/* Masque visuellement sans retirer du flux d'accessibilité.
+   Un lecteur d'écran lit toujours l'élément, le clip le rend invisible.
+   display: none le supprimerait aussi pour les technologies d'assistance. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Lien d'évitement : déplacé hors écran, ramené au focus.
+   Jamais display: none, qui le sortirait de l'ordre de tabulation. */
+.skip-link {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    z-index: 999;
+
+    padding: var(--space-2xs) var(--space-sm);
+    background-color: var(--color-highlight);
+    color: var(--color-bg);
+    border-radius: var(--radius-sm);
+
+    font-family: var(--font-display);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+
+    transform: translateY(-200%);
+    transition: transform var(--transition);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+    color: var(--color-bg);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. HEADER
+
+   backdrop-filter floute ce qui passe dessous. Le fond semi-transparent
+   reste indispensable : sans lui, les navigateurs sans backdrop-filter
+   afficheraient un header transparent et illisible.
+   -------------------------------------------------------------------------- */
+
+.site-header {
+    background-color: rgba(11, 11, 18, 0.82);
+    border-bottom: var(--border-thin);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.site-header__brand {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.site-header__brand:hover {
+    color: var(--color-accent);
+}
+
+.site-nav__link {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.site-nav__link:hover {
+    color: var(--color-text);
+}
+
+/* La page courante est signalée par l'attribut, pas par une classe :
+   le style et l'information d'accessibilité restent cohérents. */
+.site-nav__link[aria-current="page"] {
+    color: var(--color-accent);
+    font-weight: var(--weight-medium);
+}
+
+
+/* --------------------------------------------------------------------------
+   3. HERO
+   -------------------------------------------------------------------------- */
+
+.hero {
+    position: relative;
+    isolation: isolate;
+}
+
+/* Halo violet très dilué. pointer-events: none pour qu'il n'intercepte
+   aucun clic, z-index négatif pour rester derrière le texte. */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    z-index: -1;
+
+    width: min(46rem, 90vw);
+    aspect-ratio: 1;
+
+    background: radial-gradient(
+        circle at center,
+        var(--color-glow) 0%,
+        transparent 68%
+    );
+
+    pointer-events: none;
+}
+
+.hero__subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-highlight);
+}
+
+.hero__lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. BOUTONS
+
+   Ce sont des liens <a> stylés en boutons. Un lien navigue, un bouton agit :
+   le rôle sémantique ne change pas avec l'apparence.
+   -------------------------------------------------------------------------- */
+
+.btn {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: background-color var(--transition),
+                border-color var(--transition),
+                color var(--transition);
+}
+
+/* Action principale : celle que le visiteur devrait cliquer */
+.btn--primary {
+    background-color: var(--color-highlight);
+    color: var(--color-bg);
+}
+
+.btn--primary:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+}
+
+/* Action secondaire : disponible, mais visuellement en retrait */
+.btn--secondary {
+    background-color: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+}
+
+.btn--secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. BANDEAU DE STATUT
+   -------------------------------------------------------------------------- */
+
+.status-bar {
+    padding: var(--space-md);
+    background-color: var(--color-surface);
+    border-left: 3px solid var(--color-highlight);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.status-bar p {
+    max-width: var(--width-prose);
+    margin: 0;
+    color: var(--color-text);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. BLOCS « FEATURE »
+   -------------------------------------------------------------------------- */
+
+.feature {
+    padding-top: var(--space-sm);
+    border-top: 2px solid var(--color-border-strong);
+}
+
+.feature__title {
+    font-size: var(--text-lg);
+}
+
+.feature p,
+.feature li {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+}
+
+
+/* --------------------------------------------------------------------------
+   7. CARTES
+
+   Sur fond sombre, une ombre portée ne se voit pas. La profondeur se crée
+   par une surface plus claire que le fond et une bordure fine.
+   -------------------------------------------------------------------------- */
+
+.card {
+    position: relative;
+    padding: var(--space-sm);
+    background-color: var(--color-surface);
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+
+    transition: background-color var(--transition),
+                border-color var(--transition);
+}
+
+.card:hover {
+    background-color: var(--color-surface-raised);
+    border-color: var(--color-border-strong);
+}
+
+/* Toute la carte devient cliquable : le pseudo-élément étend la zone
+   du lien existant. On n'imbrique pas un <a> autour du bloc entier, ce
+   qui produirait un lien contenant image, titre et liste, illisible
+   pour un lecteur d'écran. */
+.card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.card__title {
+    font-size: var(--text-lg);
+}
+
+.card__title a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.card:hover .card__title a {
+    color: var(--color-accent);
+}
+
+/* Le contour de focus doit entourer la carte, pas le titre seul */
+.card:focus-within {
+    border-color: var(--color-accent);
+}
+
+.card__media {
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-raised);
+}
+
+.card__role {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-highlight);
+}
+
+.card p:not(.card__role) {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+
+/* --------------------------------------------------------------------------
+   8. BADGES
+   -------------------------------------------------------------------------- */
+
+.tag-list li,
+.project__meta li {
+    padding: 0.15em 0.6em;
+    background-color: var(--color-surface-raised);
+    border: var(--border-thin);
+    border-radius: var(--radius-full);
+
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.project__meta li {
+    background-color: transparent;
+}
+
+
+/* --------------------------------------------------------------------------
+   9. FILTRES
+
+   Le JavaScript bascule aria-pressed, le CSS décide de l'apparence.
+   Le script n'aura jamais à toucher aux styles.
+   -------------------------------------------------------------------------- */
+
+.filter-btn {
+    padding: var(--space-3xs) var(--space-sm);
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+
+    transition: background-color var(--transition),
+                border-color var(--transition),
+                color var(--transition);
+}
+
+.filter-btn:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+}
+
+.filter-btn[aria-pressed="true"] {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+    font-weight: var(--weight-medium);
+}
+
+
+/* --------------------------------------------------------------------------
+   10. PAGES PROJET
+   -------------------------------------------------------------------------- */
+
+.project__tagline {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+}
+
+.project__cover,
+.project__figure {
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+}
+
+.subsection {
+    padding-left: var(--space-sm);
+    border-left: 2px solid var(--color-border);
+}
+
+.subsection__title {
+    font-size: var(--text-lg);
+    color: var(--color-accent);
+}
+
+.project__footer {
+    border-top: var(--border-thin);
+}
+
+.project__footer h2 {
+    font-size: var(--text-lg);
+}
+
+
+/* --------------------------------------------------------------------------
+   11. LISTES ORDONNÉES
+   Compteur personnalisé, en monospace violet.
+   -------------------------------------------------------------------------- */
+
+.step-list {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+}
+
+.step-list li {
+    position: relative;
+    counter-increment: step;
+    padding-left: var(--space-lg);
+}
+
+.step-list li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-accent-dim);
+}
+
+
+/* --------------------------------------------------------------------------
+   12. LIENS DE SECTION
+   -------------------------------------------------------------------------- */
+
+.section-more a {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent-dim);
+    padding-bottom: 2px;
+}
+
+.section-more a:hover {
+    border-bottom-color: var(--color-highlight);
+}
+
+
+/* --------------------------------------------------------------------------
+   13. INTRODUCTION DE PAGE
+   -------------------------------------------------------------------------- */
+
+.page-intro p {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+}
+
+.entry__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-highlight);
+}
+
+
+/* --------------------------------------------------------------------------
+   14. FOOTER
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+    border-top: var(--border-thin);
+    color: var(--color-text-muted);
+}
+
+.site-footer a {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: var(--color-accent);
+}
+
+
+/* --------------------------------------------------------------------------
+   15. APPARITION AU DÉFILEMENT
+
+   La classe .js-reveal est posée par JavaScript, jamais présente dans le
+   HTML. Sans script, aucun élément n'est masqué : le contenu reste visible.
+   -------------------------------------------------------------------------- */
+
+.js-reveal {
+    opacity: 0;
+    transform: translateY(1.25rem);
+    transition: opacity 600ms var(--ease),
+                transform 600ms var(--ease);
+}
+
+.js-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+
+/* --------------------------------------------------------------------------
+   16. EASTER EGG
+
+   Superposition créée par JavaScript. Elle n'existe jamais dans le HTML,
+   donc aucune règle ici ne s'applique tant que la séquence n'a pas été
+   tapée. Le fondu est neutralisé automatiquement par la règle de
+   mouvement réduit déclarée dans base.css.
+   -------------------------------------------------------------------------- */
+
+.easter-egg {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--gutter);
+
+    background-color: rgba(11, 11, 18, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    cursor: pointer;
+
+    opacity: 0;
+    transition: opacity 300ms var(--ease);
+}
+
+.easter-egg.is-visible {
+    opacity: 1;
+}
+
+.easter-egg__image {
+    max-width: min(46rem, 100%);
+    max-height: 80vh;
+    width: auto;
+
+    border: var(--border-thin);
+    border-radius: var(--radius-lg);
+
+    transform: scale(0.96);
+    transition: transform 300ms var(--ease);
+}
+
+.easter-egg.is-visible .easter-egg__image {
+    transform: scale(1);
+}

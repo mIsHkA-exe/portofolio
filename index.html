@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Kyllian Siewe Tiague — Cybersecurity student</title>
+    <meta name="description" content="Cybersecurity student at ESILV. I build systems end to end: web applications, the APIs behind them, and the hardware they talk to.">
+
+    <link rel="canonical" href="https://example.netlify.app/index.html">
+
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                    <li><a class="site-nav__link" href="index.html" aria-current="page">Home</a></li>
+                    <li><a class="site-nav__link" href="about.html">About</a></li>
+                    <li><a class="site-nav__link" href="skills.html">Skills</a></li>
+                    <li><a class="site-nav__link" href="projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 class="hero__title" id="hero-title">Kyllian Siewe Tiague</h1>
+
+            <p class="hero__subtitle">Cybersecurity student at ESILV</p>
+
+            <p class="hero__lead">
+                I build systems end to end: the web application, the API behind it,
+                and the hardware it talks to. What interests me is the whole chain,
+                from the browser down to the sensor, and how to secure it.
+            </p>
+
+            <p class="hero__actions">
+                <a class="btn btn--primary" href="projects.html">View my projects</a>
+                <a class="btn btn--secondary" href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">Get in touch</a>
+            </p>
+        </section>
+
+        <section class="status-bar" aria-labelledby="status-title">
+            <h2 class="visually-hidden" id="status-title">Current availability</h2>
+
+            <p>
+                Looking for a technical internship and an apprenticeship in
+                cybersecurity, with an interest in DevSecOps and network
+                administration. Based in Île-de-France.
+            </p>
+        </section>
+
+        <section class="feature-grid" aria-labelledby="what-i-do-title">
+            <h2 id="what-i-do-title">What I work on</h2>
+
+            <div class="feature">
+                <h3 class="feature__title">Web and backend</h3>
+                <p>
+                    Symfony applications, REST APIs, relational databases.
+                    Server-side validation, authentication, access control.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3 class="feature__title">Systems and networks</h3>
+                <p>
+                    Linux administration, TCP/IP, traffic analysis, virtual machines.
+                    Low-level understanding of how a program actually runs.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3 class="feature__title">Embedded and IoT</h3>
+                <p>
+                    Arduino and ESP32, sensors, embedded C++.
+                    Connecting physical hardware to a web platform over HTTP.
+                </p>
+            </div>
+        </section>
+
+        <section class="card-grid" aria-labelledby="featured-title">
+            <h2 id="featured-title">Featured work</h2>
+
+            <article class="card">
+                <img class="card__media"
+                     src="assets/images/projects/davinci-prototype.jpg"
+                     alt="Physical scale model of the smart parking prototype, built in laser-cut wood">
+
+                <h3 class="card__title">
+                    <a href="projects/davinci-custom-garage.html">DAVINCI Custom Garage</a>
+                </h3>
+
+                <p class="card__role">Technical lead</p>
+
+                <p>
+                    A connected smart parking system. A Symfony platform handles
+                    reservations and generates QR codes; an Arduino and ESP32-CAM
+                    read them at the barrier and report space occupancy back over a
+                    REST API. Built as a working physical prototype within a
+                    150&nbsp;€ hardware budget.
+                </p>
+
+                <ul class="tag-list">
+                    <li>Symfony</li>
+                    <li>REST API</li>
+                    <li>MySQL</li>
+                    <li>Arduino</li>
+                    <li>C++</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <img class="card__media"
+                     src="assets/images/projects/meno-clean-home.jpg"
+                     alt="Home page of the MENO CLEAN SERVICES website, showing a before and after comparison slider">
+
+                <h3 class="card__title">
+                    <a href="projects/meno-clean-services.html">MENO CLEAN Services</a>
+                </h3>
+
+                <p class="card__role">Sole developer</p>
+
+                <p>
+                    A commercial website for a cleaning company, rewritten from a
+                    static HTML site into a Symfony application. The service catalog
+                    lives in the database, so the grid and the quote form always stay
+                    in sync. Two server-validated forms send SMTP notifications.
+                </p>
+
+                <ul class="tag-list">
+                    <li>Symfony 8.1</li>
+                    <li>Twig</li>
+                    <li>Stimulus</li>
+                    <li>MySQL</li>
+                    <li>SEO</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <img class="card__media"
+                     src="assets/images/projects/cpu-architecture-sketch.jpg"
+                     alt="Hand-drawn architecture diagram of the simulated processor, showing memory, control unit and data bus">
+
+                <h3 class="card__title">
+                    <a href="projects/cpu-simulator.html">16-bit CPU Simulator</a>
+                </h3>
+
+                <p class="card__role">Pipeline implementation</p>
+
+                <p>
+                    A processor simulator written in C, running a 4-stage pipeline
+                    cycle by cycle. I implemented the pipeline layer: inter-stage
+                    registers, structural and data hazard detection, and the
+                    forwarding mechanism that resolves dependencies between
+                    consecutive instructions.
+                </p>
+
+                <ul class="tag-list">
+                    <li>C</li>
+                    <li>Computer architecture</li>
+                    <li>Pipelining</li>
+                </ul>
+            </article>
+
+            <p class="section-more"><a href="projects.html">See all projects</a></p>
+        </section>
+
+        <section class="feature-grid" aria-labelledby="skills-title">
+            <h2 id="skills-title">Skills</h2>
+
+            <div class="feature">
+                <h3 class="feature__title">Working with</h3>
+                <ul>
+                    <li>C</li>
+                    <li>Python</li>
+                    <li>PHP and Symfony</li>
+                    <li>SQL and MySQL</li>
+                    <li>Linux</li>
+                    <li>Networking</li>
+                    <li>HTML and CSS</li>
+                    <li>Git</li>
+                </ul>
+            </div>
+
+            <div class="feature">
+                <h3 class="feature__title">Building experience in</h3>
+                <ul>
+                    <li>JavaScript</li>
+                    <li>Docker</li>
+                    <li>CI/CD</li>
+                    <li>Arduino and ESP32</li>
+                    <li>Wireshark</li>
+                    <li>Kali Linux</li>
+                </ul>
+            </div>
+
+            <div class="feature">
+                <h3 class="feature__title">Currently exploring</h3>
+                <ul>
+                    <li>AWS and Azure</li>
+                    <li>Infrastructure as Code</li>
+                    <li>SIEM and log analysis</li>
+                    <li>AI applied to security</li>
+                </ul>
+            </div>
+
+            <p class="section-more"><a href="skills.html">Read the full breakdown</a></p>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+    <script src="assets/js/filters.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
+    <script src="assets/js/easter-egg.js" defer></script>
+</body>
+</html>

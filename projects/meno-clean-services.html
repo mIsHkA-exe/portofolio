@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>MENO CLEAN Services — Kyllian Siewe Tiague</title>
+    <meta name="description"
+        content="Rewriting a live commercial website from static HTML into a Symfony 8.1 application.">
+
+    <link rel="canonical" href="https://example.netlify.app/projects/meno-clean-services.html">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/tokens.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+        <a class="site-header__brand" href="../index.html">Kyllian Siewe Tiague</a>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul class="site-nav__list">
+                <li><a class="site-nav__link" href="../index.html">Home</a></li>
+                <li><a class="site-nav__link" href="../about.html">About</a></li>
+                <li><a class="site-nav__link" href="../skills.html">Skills</a></li>
+                <li><a class="site-nav__link" href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <article class="project">
+
+            <header class="project__header">
+                <h1 class="project__title">MENO CLEAN Services</h1>
+                <p class="project__tagline">Rewriting a live commercial website into a Symfony application</p>
+                <ul class="project__meta">
+                    <li>Sole developer</li>
+                    <li>Client project, 2026</li>
+                    <li>Web</li>
+                </ul>
+            </header>
+
+            <img class="project__cover" src="../assets/images/projects/meno-clean-home.jpg"
+                alt="Home page of the MENO CLEAN SERVICES website">
+
+            <section aria-labelledby="meno-context">
+                <h2 id="meno-context">Context</h2>
+                <p>
+                    A cleaning company operating in Île-de-France had a static
+                    HTML, CSS and JavaScript site. Every change to the service list
+                    meant editing the markup by hand in several places, and the
+                    contact form sent mail through a PHP script with credentials
+                    written directly into the file.
+                </p>
+                <p>
+                    This is my only non-academic project. Someone depends on it
+                    working.
+                </p>
+            </section>
+
+            <section aria-labelledby="meno-problem">
+                <h2 id="meno-problem">The problem</h2>
+                <p>
+                    The site had no single source of truth. The service grid and the
+                    quote form's dropdown listed the same eighteen services in two
+                    separate places, so they drifted apart. Adding a service meant
+                    remembering every location it appeared in.
+                </p>
+            </section>
+
+            <section aria-labelledby="meno-decisions">
+                <h2 id="meno-decisions">Design decisions</h2>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Services live in the database</h3>
+                    <p>
+                        Both the grid and the form dropdown read the same table.
+                        Adding a service is now one operation in one place, and the
+                        two can no longer disagree.
+                    </p>
+                </article>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">A quote keeps both a link and a frozen copy</h3>
+                    <p>
+                        A quote request stores a relation to the service and a copy
+                        of its label at the time of the request. Renaming a service
+                        must not retroactively change what a customer asked for two
+                        months ago.
+                    </p>
+                </article>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Persist first, notify second</h3>
+                    <p>
+                        The request is written to the database before the email is
+                        sent. If the SMTP connection fails, the enquiry still exists
+                        and is flagged as unsent, rather than disappearing.
+                    </p>
+                </article>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Filters derived from the data</h3>
+                    <p>
+                        Category filters are generated from the categories actually
+                        in use, which makes an empty filter structurally impossible.
+                    </p>
+                </article>
+
+                <article class="subsection">
+                    <h3 class="subsection__title">Progressive enhancement</h3>
+                    <p>
+                        Real values are in the HTML; JavaScript only animates them.
+                        The site is fully readable with scripting disabled, and the
+                        forms still submit.
+                    </p>
+                </article>
+            </section>
+
+            <section aria-labelledby="meno-challenge">
+                <h2 id="meno-challenge">A bug worth remembering</h2>
+                <p>
+                    Submitting an invalid form silently did nothing. No error in the
+                    console, no message on the page, no server exception. The
+                    validation was running correctly and the errors were being
+                    rendered, but the page never changed.
+                </p>
+                <p>
+                    The cause was that Turbo, which intercepts form submissions,
+                    requires specific HTTP status codes: a redirect after success,
+                    and a 422 when re-rendering an invalid form. Symfony was
+                    returning a plain 200, which Turbo refuses, so it discarded the
+                    response entirely.
+                </p>
+                <p>
+                    The lesson was not about Turbo. It was that a silent failure is
+                    the most expensive kind, and that when nothing at all happens,
+                    the problem is usually a contract being broken rather than code
+                    being wrong.
+                </p>
+                <img class="project__figure" src="../assets/images/projects/meno-clean-gallery.jpg"
+                    alt="The before and after gallery with category filters and comparison sliders">
+            </section>
+
+            <section aria-labelledby="meno-result">
+                <h2 id="meno-result">Result</h2>
+                <p>
+                    A complete Symfony 8.1 application: eleven-section home page,
+                    three legal pages, two validated forms with CSRF protection and a
+                    honeypot field, SMTP notifications with reply-to routing, ten
+                    Stimulus controllers replacing the original scripts, structured
+                    data for search engines and a sitemap generated from the routes.
+                </p>
+                <p>
+                    The original 443 lines of JavaScript came down to roughly 280,
+                    organised into single-purpose controllers.
+                </p>
+            </section>
+
+            <section aria-labelledby="meno-learned">
+                <h2 id="meno-learned">What I took from it</h2>
+                <ul>
+                    <li>
+                        A single source of truth removes a class of bugs rather than
+                        fixing individual ones.
+                    </li>
+                    <li>
+                        Secrets belong in an ignored environment file. This project
+                        started with a Gmail application password committed in plain
+                        text; it was revoked, and the habit changed.
+                    </li>
+                    <li>
+                        Writing a manual test checklist from bugs you have already
+                        hit is faster than remembering them.
+                    </li>
+                </ul>
+            </section>
+
+            <footer class="project__footer">
+                <h2>Links</h2>
+                <ul class="project__links">
+                    <li>Live site: coming soon</li>
+                    <li><a href="../projects.html">Back to all projects</a></li>
+                </ul>
+            </footer>
+
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <ul class="site-footer__links">
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../skills.html">Skills</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+            </ul>
+        </nav>
+
+        <ul class="site-footer__social">
+            <li><a href="https://github.com/mIsHkA-exe" rel="noopener">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/kyllian-siewe-tiague" rel="noopener">LinkedIn</a></li>
+        </ul>
+
+        <p><small>&copy; 2026 Kyllian Siewe Tiague</small></p>
+    </footer>
+
+</body>
+
+</html>
